@@ -33,7 +33,7 @@ The `TreeNode` class represents a generic node of a tree which includes referenc
 `Person` class is a subclass of `TreeNode` class which is a specific node for representing the family tree.
 `FamilyTree` class is responsible for inititalizing the familytree and also exposing several apis
 
-There are 15 JUnit test cases which essentially tests the minimum relations that need to be handled.
+There are 15 JUnit test cases which essentially test the minimum relations that need to be handled. These are run during `mvn clean install`
 
 
 ### i. Part I - Create a simple REST API
