@@ -1,5 +1,31 @@
 # Familytree
 
+
+This is the solution to Problem 1 from the attached document:
+
+**Model out the Shan family tree so that when given a ‘name’ and a ‘relationship’ as an input, the output are the people that correspond to the relationship.**
+
+## Deliverables
+
+1. All source code
+https://github.com/koustubh25/southbank-software-familytree
+
+2. A .jar (or other runnable program) from part 1 of the test.
+https://www.dropbox.com/sh/ojmz8rf06dcgiwo/AACMFUbT-0Y6FM8yvBVAUguwa?dl=0
+
+3. A dockerfile from part 2 of the test.
+https://github.com/koustubh25/southbank-software-familytree/blob/master/Dockerfile
+
+4. A kubernetes configuration file from part 3 of the test.
+https://github.com/koustubh25/southbank-software-familytree/blob/master/deploy.yml
+
+5. A shell script (or equivilent) that builds and runs your test kubernetes cluster.
+https://github.com/koustubh25/southbank-software-familytree/blob/master/deploy.sh
+
+A demo of the application has already been setup on my personal GCP account (deployed on Kubernetes). It can be accessed here
+`GET http://35.221.113.235:8080/getPeople?name=shan&relation=children``
+
+
 ## I. Implementation
 
 The `TreeNode` class represents a generic node of a tree which includes references to parent and children.
@@ -33,6 +59,10 @@ Sample Output
 {"data":["Lavnya"],"statusCode":200}
 ```
 
+
+The endpoint is always `/getPeople` and it takes two attributes `name` and `relation`
+The output is an array of people.
+
 This behavior is similar to the behavior from Facebook apis.
 
 
@@ -62,3 +92,14 @@ The above two commands will deploy the app on Kubernetes and expose the service 
  ```
  http://<load balancer ip>:8080/getPeople?name=shan&relation=children
  ```
+
+ ### Part 4 - Deployment script
+
+ You can run the deployment script
+ `./deploy.sh`
+ This will do the following
+ 1. Create a jar file in `target/familytree-1.0.jar`
+ 2. Build a Docker image on local with the tag `
+docker build -t `
+3. Create a Kubernetes deployment
+4. Expose the deployment to the outside world
