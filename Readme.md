@@ -64,6 +64,58 @@ Sample Output
 The endpoint is always `/getPeople` and it takes two attributes `name` and `relation`
 The output is an array of people.
 
+name can be one of the following:
+```
+Shan
+Anga
+Ish
+Chit
+Ambi
+Vich
+Lika
+Saty
+Vya
+Drita
+Jaya
+Vrita
+Vila
+Jnki
+Chika
+Kpila
+Satvy
+Asva
+Savya
+Krpi
+Saayan
+Mina
+Jata
+Driya
+Mnu
+Lavnya
+Gru
+Kriya
+Misa
+```
+
+relation can be one of the following:
+```
+paternaluncles
+maternaluncles
+paternalaunt
+maternalaunt
+sisterinlaw
+brotherinlaw
+cousins
+father
+mother
+children
+sons
+daughters
+brothers
+sisters
+granddaughter
+```
+
 This behavior is similar to the behavior from Facebook apis.
 
 
