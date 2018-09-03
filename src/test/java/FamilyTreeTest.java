@@ -21,8 +21,8 @@ public class FamilyTreeTest{
     public void testChildren() throws Exception{
 
         String[] expectedChildren = new String[]{"Ish", "Chit", "Vich", "Saty"};
-        String name = "King Shan";
-        Assert.assertArrayEquals(expectedChildren, ft.getchildren(name).stream().map(child -> child.getName()).collect(Collectors.toList()).toArray());
+        String name = "Shan";
+        Assert.assertArrayEquals(expectedChildren, ft.getchildren(name).toArray());
 
     }
 
@@ -36,8 +36,8 @@ public class FamilyTreeTest{
 
     @Test
     public void testSisters() throws Exception{
-        String name = "Saty";
-        String[] expectedSisters = new String[]{};
+        String name = "Vila";
+        String[] expectedSisters = new String[]{"Chika"};
         Assert.assertArrayEquals(expectedSisters, ft.getSisters(name).toArray());
     }
 
@@ -50,7 +50,7 @@ public class FamilyTreeTest{
 
     @Test
     public void testDaughters() throws Exception{
-        String name = "Queen Anga";
+        String name = "Anga";
         String[] expectedDaughters = new String[]{"Saty"};
         Assert.assertArrayEquals(expectedDaughters, ft.getDaughters(name).toArray());
     }
@@ -58,14 +58,14 @@ public class FamilyTreeTest{
     @Test
     public void testFather() throws Exception{
         String name = "Vich";
-        String expectedFather = "King Shan";
+        String expectedFather = "Shan";
         Assert.assertEquals(expectedFather, ft.getFather(name));
     }
 
     @Test
     public void testMother() throws Exception{
         String name = "Vich";
-        String expectedMother = "Queen Anga";
+        String expectedMother = "Anga";
         Assert.assertEquals(expectedMother, ft.getMother(name));
     }
 
@@ -122,6 +122,15 @@ public class FamilyTreeTest{
         String name = "Vila";
         String[] expectedPaternalAunts = new String[]{"Saty", "Ambi"};
         Assert.assertArrayEquals(expectedPaternalAunts, ft.getPaternalAunt(name).toArray());
+
+    }
+
+    @Test
+    public void getGrandDaughters() throws Exception{
+        String name = "Anga";
+        System.out.println(ft.getGrandDaughters(name));
+        String[] expectedGrandDaughters = new String[]{"Satvy", "Chika"};
+        Assert.assertArrayEquals(expectedGrandDaughters, ft.getGrandDaughters(name).toArray());
 
     }
 

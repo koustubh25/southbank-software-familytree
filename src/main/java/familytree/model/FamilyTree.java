@@ -1,5 +1,6 @@
 package familytree.model;
 
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -19,7 +20,7 @@ public class FamilyTree{
     }
 
     private void createPersons(){
-        node.put("King Shan", new Person("King Shan", "Queen Anga", 'M'));
+        node.put("Shan", new Person("Shan", "Anga", 'M'));
         node.put("Ish", new Person("Ish", null, 'M'));
         node.put("Chit", new Person("Chit", "Ambi", 'M'));
         node.put("Vich", new Person("Vich", "Lika", 'M'));
@@ -42,8 +43,8 @@ public class FamilyTree{
     //only create parent child relationship
     private void establishRelationships(){
 
-        Person kingShan = node.get("King Shan");
-        kingShan.addChild(node.get("Ish"))
+        Person Shan = node.get("Shan");
+        Shan.addChild(node.get("Ish"))
                 .addChild(node.get("Chit"))
                 .addChild(node.get("Vich"))
                 .addChild(node.get("Saty"));
@@ -76,11 +77,9 @@ public class FamilyTree{
 
     }
 
-    public List<Person> getchildren(String person){
-        Person kingShan = node.get(person);
-        List<Person> children = kingShan.getChildren();
-
-        return children;
+    public List<String> getchildren(String name){
+        Person person = node.get(name);
+        return person.getChildren().stream().map(child -> child.getName()).collect(Collectors.toList());
 
     }
 
@@ -332,5 +331,48 @@ public class FamilyTree{
         return Stream.concat(fatherssisters.stream(), fatherssistersInLaw.stream()).collect(Collectors.toList());
 
     }
+
+    public List<String> getGrandDaughters(String name){
+        Person person = node.get(name);
+        List<List<String>> daughtersOfDaughters = new ArrayList<>();
+        List<List<String>> daughtersOfSons = new ArrayList<>();
+
+        getDaughters(name).forEach(daughter -> {
+            daughtersOfDaughters.add(node.get(daughter).getChildren().stream()
+                    .filter(child -> child.getSex() == 'F')
+                    .map(child -> child.getName()).collect(Collectors.toList()));
+        });
+
+        getSons(name).forEach(daughter -> {
+            daughtersOfSons.add(node.get(daughter).getChildren().stream()
+                    .filter(child -> child.getSex() == 'F')
+                    .map(child -> child.getName()).collect(Collectors.toList()));
+        });
+
+//        return Stream.concat(daughtersOfDaughters.stream(), daughtersOfSons.stream()).collect(Collectors.toList());
+
+
+        List<String> dod = daughtersOfDaughters.stream().flatMap(daughter -> daughter.stream()).collect(Collectors.toList());
+        List<String> dos = daughtersOfSons.stream().flatMap(daughter -> daughter.stream()).collect(Collectors.toList());
+
+        return Stream.concat(dod.stream(), dos.stream()).collect(Collectors.toList());
+
+
+    }
+
+    public boolean validateNames(String name){
+
+        if(node.get(name) != null || findNameInPartners(name).isPresent())
+            return true;
+        return false;
+
+    }
+
+    public boolean validateRelations(String relation){
+        String[] validRelations = {"paternaluncles", "maternaluncles", "paternalaunt", "maternalaunt", "sisterinlaw", "brotherinlaw", "cousins", "father", "mother", "children", "sons", "daughters", "brothers", "sisters", "granddaughter"};
+        return Stream.of(validRelations).anyMatch(rel -> relation.equals(rel));
+
+    }
+
 
 }

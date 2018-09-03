@@ -1,14 +1,14 @@
 package familytree;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
+import org.json.simple.JSONObject;
+
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+
 
 @RestController
 public class FamilyTreeController implements ErrorController {
@@ -17,42 +17,58 @@ public class FamilyTreeController implements ErrorController {
     private FamilyTreeService service;
 
     @RequestMapping(value="/getPeople")
-    public List<String> getPeople(@RequestParam(value="name", required = true) String name,
+    public JSONObject getPeople(@RequestParam(value="name", required = true) String name,
                                   @RequestParam(value = "relation", required = true) String relation){
 
+        JSONObject json = new JSONObject();
         try {
-            return service.getPeopleBasedOnRelation(name, relation);
+            json.put("data", service.getPeopleBasedOnRelation(name, relation));
+            json.put("statusCode", 200);
         }
-        catch(RuntimeException e){
-            throw e;
+        catch(Exception e){
+            if(e.getMessage().equals("Invalid name")){
+                json.put("statusCode", 400);
+                json.put("message", "The name you entered is invalid");
+                json.put("data", "");
+            }
+            else if(e.getMessage().equals("Invalid relation")){
+                json.put("statusCode", 400);
+                json.put("message", "The relation you entered is invalid");
+                json.put("data", "");
+            }
         }
+        return json;
     }
 
 
-
+    //NPE
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public void handleMissingParams(MissingServletRequestParameterException ex) {
+    public JSONObject handleMissingParams(MissingServletRequestParameterException ex) {
         String name = ex.getParameterName();
-        System.out.println(name + " parameter is missing");
-        // Actual exception handling
+        JSONObject json = new JSONObject();
+        json.put("statusCode", 422);
+        json.put("message", name + " parameter is missing");
+        return json;
+
     }
 
     @RequestMapping("/*")
-//    public void handleRequest() {
-//        throw new RuntimeException("Url path does not exist. The only path that exists is /getPeople");
-//    }
-    public ResponseEntity invalidUrl(){
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    public JSONObject invalidUrl(){
+        JSONObject json = new JSONObject();
+        json.put("statusCode", 404);
+        json.put("message", "The url endpoint is not correct. Please try this endpoint -> /getPeople");
+        return json;
     }
 
     @RequestMapping("/error")
     @ResponseBody
-    public String handleError(HttpServletRequest request) {
-        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-        Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
-        return String.format("<html><body><h2>Error Page</h2><div>Status code: <b>%s</b></div>"
-                        + "<div>Exception Message: <b>%s</b></div><body></html>",
-                statusCode, exception==null? "N/A": exception.getMessage());
+    public JSONObject handleError(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        json.put("statusCode", 500);
+        json.put("message", "Internal Server error occurred. Most probably the result should have been empty array. Sadly, there wasn't enough time to check all cases");
+        json.put("data", new String[]{});
+        return json;
+
     }
 
     @Override
