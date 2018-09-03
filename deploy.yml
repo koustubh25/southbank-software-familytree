@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: family-tree-deployment
+  labels:
+    app: familytree
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: familytree
+  template:
+    metadata:
+      labels:
+        app: familytree
+    spec:
+      containers:
+      - name: familytree
+        image: index.docker.io/koustubh/familytree:v1.0
+        ports:
+        - containerPort: 8080
