@@ -12,8 +12,6 @@ public class Person extends TreeNode{
     String name;
     Optional<String> partnerName;
     char sex;
-//    Person parent;
-//    List<Person> children;
 
     Person(String name, String partnerName, char sex){
         this.name = name;

@@ -8,22 +8,27 @@ This is the solution to Problem 1 from the attached document:
 ## Deliverables
 
 1. All source code
+
 https://github.com/koustubh25/southbank-software-familytree
 
 2. A .jar (or other runnable program) from part 1 of the test.
+
 https://www.dropbox.com/sh/ojmz8rf06dcgiwo/AACMFUbT-0Y6FM8yvBVAUguwa?dl=0
 
 3. A dockerfile from part 2 of the test.
 https://github.com/koustubh25/southbank-software-familytree/blob/master/Dockerfile
 
 4. A kubernetes configuration file from part 3 of the test.
+
 https://github.com/koustubh25/southbank-software-familytree/blob/master/deploy.yml
 
 5. A shell script (or equivilent) that builds and runs your test kubernetes cluster.
+
 https://github.com/koustubh25/southbank-software-familytree/blob/master/deploy.sh
 
 A demo of the application has already been setup on my personal GCP account (deployed on Kubernetes). It can be accessed here
-`GET http://35.221.113.235:8080/getPeople?name=shan&relation=children``
+
+`GET http://35.221.113.235:8080/getPeople?name=shan&relation=children`
 
 
 ## I. Implementation
