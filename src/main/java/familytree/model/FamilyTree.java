@@ -1,6 +1,5 @@
 package familytree.model;
 
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Component;
 
 import java.util.*;

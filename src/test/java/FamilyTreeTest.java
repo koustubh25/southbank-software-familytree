@@ -3,8 +3,6 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.stream.Collectors;
-
 public class FamilyTreeTest{
 
     static FamilyTree ft;

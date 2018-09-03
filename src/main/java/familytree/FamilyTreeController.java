@@ -40,8 +40,6 @@ public class FamilyTreeController implements ErrorController {
         return json;
     }
 
-
-    //NPE
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public JSONObject handleMissingParams(MissingServletRequestParameterException ex) {
         String name = ex.getParameterName();
@@ -65,7 +63,7 @@ public class FamilyTreeController implements ErrorController {
     public JSONObject handleError(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         json.put("statusCode", 500);
-        json.put("message", "Internal Server error occurred. Most probably the result should have been empty array. Sadly, there wasn't enough time to check all cases");
+        json.put("message", "Internal Server error occurred. Most probably the result should have been an empty array. Sadly, there wasn't enough time to check all cases");
         json.put("data", new String[]{});
         return json;
 
