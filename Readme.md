@@ -152,7 +152,6 @@ The above two commands will deploy the app on Kubernetes and expose the service 
  `./deploy.sh`
  This will do the following
  1. Create a jar file in `target/familytree-1.0.jar`
- 2. Build a Docker image on local with the tag `
-docker build -t familytree:v1.0`
+ 2. Build a Docker image on local with the tag `familytree:v1.0`
 3. Create a Kubernetes deployment
 4. Expose the deployment to the outside world
