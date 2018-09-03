@@ -35,6 +35,9 @@ The `TreeNode` class represents a generic node of a tree which includes referenc
 
 There are 15 JUnit test cases which essentially test the minimum relations that need to be handled. These are run during `mvn clean install`
 
+Since the structure for only King Shan's family is show in the problem statement and not of their spouse's (e.g. `Chit's'` brothers and sisters are known, but his spouse (`Amib's '` aren't known))
+So, the nodes in the tree are created with only King Shan's relatives and a field for the spouse is added `partnerName`
+![class relationship](https://raw.githubusercontent.com/koustubh25/southbank-familytree/master/classRelationship.png)
 
 ### i. Part I - Create a simple REST API
 The rest API implementation of the familytree java application is realized using `Spring` boot framework. The controller `FamilyTreeController` routes specific paths to the endpoint. The service class `FamilyTreeService` is used the query the model and return the results to the controller.
